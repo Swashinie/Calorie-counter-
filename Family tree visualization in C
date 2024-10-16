@@ -1,0 +1,88 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_MEMBERS 100
+#define MAX_CHILDREN 10
+
+// Define the structure for a family member
+typedef struct {
+    char name[50];
+    int parentIndex;
+    int childrenIndices[MAX_CHILDREN];
+    int childrenCount;
+} Person;
+
+// Global array to store family members
+Person family[MAX_MEMBERS];
+int familyCount = 0;
+
+// Function to add a family member
+int addPerson(const char *name, int parentIndex) {
+    Person newPerson;
+    strcpy(newPerson.name, name);
+    newPerson.parentIndex = parentIndex;
+    newPerson.childrenCount = 0;
+
+    if (parentIndex != -1) {
+        family[parentIndex].childrenIndices[family[parentIndex].childrenCount++] = familyCount;
+    }
+
+    family[familyCount] = newPerson;
+    return familyCount++;
+}
+
+// Function to print the family tree
+void printFamilyTree(int index, int level) {
+    for (int i= 0; i< level; i++) {
+        printf(“  “);
+    }
+    printf(“%s\n”, family[index].name);
+    
+    for (int i = 0; i < family[index].childrenCount; i++) {
+        printFamilyTree(family[index].childrenIndices[i], level + 1);
+    }
+}
+
+// Function to find the index of a person by name
+int findPersonIndex(const char *name) {
+    for (int I = 0; I < familyCount; i++) {
+        if (strcmp(family[i].name, name) == 0) {
+            return I;
+        }
+    }
+    return -1;
+}
+
+int main() {
+    char name[50], parentName[50];
+    int parentIndex;
+
+    printf(“Enter the name of the root member: “);
+    scanf(“%s”, name);
+    int rootIndex = addPerson(name, -1); // root
+
+    while (1) {
+        printf(“Enter the name of the family member (or type ‘end’ to finish): “);
+        scanf(“%s”, name);
+        if (strcmp(name, “end”) == 0) {
+            break;
+        }
+
+        printf(“Enter the name of the parent of %s: “, name);
+        scanf(“%s”, parentName);
+        parentIndex = findPersonIndex(parentName);
+        
+        if (parentIndex == -1) {
+            printf(“Parent not found. Try again.\n”);
+            continue;
+        }
+
+        addPerson(name, parentIndex);
+    }
+
+    // Print the family tree
+    printf(“\nFamily Tree:\n”);
+    printFamilyTree(rootIndex, 0);
+
+    return 0;
+}}
