@@ -1,0 +1,39 @@
+
+def calculate_daily_calorie_requirement(age, gender, weight):
+
+    if gender.lower() == ‘male’:
+        bmr = 88.362 + (13.397 * weight) – (5.677 * age)
+    elif gender.lower() == ‘female’:
+        Bmr = 447.593 + (9.247 * weight) – (4.330 * age)
+    else:
+        aise ValueError(“Gender should be either ‘male’ or ‘female’”)
+    
+    return bmr
+
+STANDARD_CALORIE_INTAKE_MALE = 2500 
+STANDARD_CALORIE_INTAKE_FEMALE = 2000 
+
+def main():
+    print(“Welcome to the Calorie Converter and Daily Calorie Requirement Calculator!”)
+    age = int(input(“Enter your age (in years): “))
+    gender = input(“Enter your gender (male/female): “)
+    weight = float(input(“Enter your weight (in kg): “))
+
+    daily_calories = calculate_daily_calorie_requirement(age, gender, weight)
+    print(f”Your estimated daily calorie requirement is: {daily_calories} calories.”)
+
+    Standard_calorie_intake = STANDARD_CALORIE_INTAKE_MALE 
+    if gender.lower() == ‘male’ 
+    else STANDARD_CALORIE_INTAKE_FEMALE
+
+    if daily_calories > standard_calorie_intake:
+        print(“Your daily calorie requirement is greater than the standard recommendation.”)
+        print(“Consider consulting a healthcare professional for personalized advice.”)
+    elif daily_calories < standard_calorie_intake:
+        print(“Your daily calorie requirement is lower than the standard recommendation.”)
+        print(“Consider consulting a healthcare professional for personalized advice.”)
+    else:
+        print(“Your daily calorie requirement matches the standard recommendation.”)
+
+Iif __name__ == “__main__”:
+    main()
